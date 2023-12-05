@@ -19,3 +19,28 @@ def test_get_single_resource_not_found():
     result = requests.get(url)
 
     assert result.status_code == 404
+
+def test_get_list_of_resources_schema():
+    url = "https://reqres.in/api/unknown"
+    schema = load_schema("get_list_resource.json")
+
+    result = requests.get(url)
+
+    assert result.status_code == 200
+    jsonschema.validate(result.json(), schema)
+
+
+def test_get_list_of_resources_total_pages():
+    url = "https://reqres.in/api/unknown"
+    total_pages = 2
+
+    result = requests.get(
+        url,
+        params={"total_pages": total_pages}
+    )
+
+    assert result.json()["total_pages"] == total_pages
+
+
+
+
