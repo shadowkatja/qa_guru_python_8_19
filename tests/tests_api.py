@@ -46,12 +46,29 @@ def test_create_new_user_successfully():
 
     result = requests.post(
         'https://reqres.in/api/users',
-        {"name": "Charles",
-         "job": "Ferrari F1 driver"}
+        {
+            "name": "Charles",
+            "job": "Ferrari F1 driver"
+        }
     )
 
     assert result.status_code == 201
     assert result.json()['name'] == 'Charles'
+    assert result.json()['job'] == 'Ferrari F1 driver'
+    jsonschema.validate(result.json(), schema)
+
+def test_update_existent_user():
+    schema = load_schema("put_update_user.json")
+
+    result = requests.put(
+        'https://reqres.in/api/users/2',
+        {
+            "name": "Charles Leclerc",
+            "job": "Ferrari F1 driver"
+        }
+    )
+    assert result.status_code == 200
+    assert result.json()['name'] == 'Charles Leclerc'
     assert result.json()['job'] == 'Ferrari F1 driver'
     jsonschema.validate(result.json(), schema)
 
