@@ -80,7 +80,7 @@ def test_delete_user():
     assert response.status_code == 204
 
 def test_successful_registration():
-    response = requests.post(
+    result = requests.post(
         'https://reqres.in/api/register',
         {
             "email": "eve.holt@reqres.in",
@@ -88,5 +88,5 @@ def test_successful_registration():
         }
     )
 
-    assert response.status_code == 200
-    assert response.json()['token'] is not None
+    assert result.status_code == 200
+    assert result.json()['token'] is not None
