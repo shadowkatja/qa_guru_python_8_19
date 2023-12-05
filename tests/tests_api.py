@@ -73,11 +73,11 @@ def test_update_existent_user():
     jsonschema.validate(result.json(), schema)
 
 def test_delete_user():
-    response = requests.delete(
+    result = requests.delete(
         'https://reqres.in/api/users/2'
     )
 
-    assert response.status_code == 204
+    assert result.status_code == 204
 
 def test_successful_registration():
     result = requests.post(
