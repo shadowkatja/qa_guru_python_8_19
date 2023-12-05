@@ -102,3 +102,15 @@ def test_unsuccessful_registration():
 
     assert result.status_code == 400
     assert result.json()['error'] == 'Missing password'
+
+def test_successful_login():
+    result = requests.post(
+        'https://reqres.in/api/login',
+        {
+            "email": "eve.holt@reqres.in",
+            "password": "cityslicka"
+        }
+    )
+
+    assert result.status_code == 200
+    assert result.json()['token'] == "QpwL5tke4Pnpja7X4"
