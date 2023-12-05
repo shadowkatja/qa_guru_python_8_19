@@ -20,7 +20,7 @@ def test_get_single_resource_not_found():
 
     assert result.status_code == 404
 
-def test_get_list_of_resources_schema():
+def test_get_list_of_resources_schema_successfully():
     url = "https://reqres.in/api/unknown"
     schema = load_schema("get_list_resource.json")
 
@@ -41,6 +41,17 @@ def test_get_list_of_resources_total_pages():
 
     assert result.json()["total_pages"] == total_pages
 
+def test_create_new_user_successfully():
+    schema = load_schema("post_create_user.json")
 
+    result = requests.post(
+        'https://reqres.in/api/users',
+        {"name": "Charles",
+         "job": "Ferrari F1 driver"}
+    )
 
+    assert result.status_code == 201
+    assert result.json()['name'] == 'Charles'
+    assert result.json()['job'] == 'Ferrari F1 driver'
+    jsonschema.validate(result.json(), schema)
 
